@@ -1,10 +1,10 @@
 import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-dbhost = 'localhost'
-dbuser = 'juraj'
+dbhost = ''
+dbuser = ''
 dbpass = ''
-database = 'test_database'
+database = ''
 
 
 class Config:
