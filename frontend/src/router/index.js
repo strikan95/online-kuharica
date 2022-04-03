@@ -1,14 +1,15 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import HelloVue from "../components/HelloVue";
+//import SingleRecipe from "../components/SingleRecipe";
+import RecipeList from "../components/RecipeList";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/hellovue",
-    name: "HelloVue",
-    component: HelloVue,
+    path: "/recipes",
+    name: "RecipeList",
+    component: RecipeList,
   },
 ];
 
