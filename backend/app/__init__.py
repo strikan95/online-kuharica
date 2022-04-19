@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from flask import Flask
 from config import config as cfg
 from flask_sqlalchemy import SQLAlchemy
@@ -18,6 +20,15 @@ def create_app(config_name):
     mApp = Flask(__name__)
     mApp.config.from_object(cfg[config_name])
     cfg[config_name].init_app(mApp)
+
+    mApp.config['JWT_COOKIE_SECURE'] = False
+    mApp.config['JWT_TOKEN_LOCATION'] = ['cookies']
+    mApp.config["JWT_SECRET_KEY"] = "super-secret"
+    mApp.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(minutes=30)
+    mApp.config["JWT_REFRESH_TOKEN_EXPIRES"] = timedelta(days=30)
+    mApp.config['JWT_COOKIE_CSRF_PROTECT'] = False
+    #mApp.config['JWT_COOKIE_SECURE'] = True
+    #mApp.config['JWT_COOKIE_SAMESITE'] = ['None']
 
     db.init_app(mApp)
     jwt.init_app(mApp)

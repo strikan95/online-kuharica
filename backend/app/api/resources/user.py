@@ -1,49 +1,19 @@
+from cmath import log
 from typing import get_args
 from flask import request
 from flask_restful import Resource
 from http import HTTPStatus
 from flask_jwt_extended import get_jwt_identity, jwt_required
 
-from . import api
-from ..models.users import User
-from .auth.util import hash_password
-from .auth.token import TokenResource
+from .. import api
+from app.models.users import User
 
-class UserListResource(Resource):
-    def post(self):
-        json_data = request.get_json()
-
-        username = json_data.get('username')
-        email = json_data.get('email')
-        non_hash_password = json_data.get('password')
-
-        if User.get_by_username(username):
-            return {'message': 'Username already used'}, HTTPStatus.BAD_REQUEST
-
-            
-        if User.get_by_email(email):
-            return {'message': 'Email already used'}, HTTPStatus.BAD_REQUEST
-
-        #TODO Hash password
-        password = hash_password(non_hash_password)
-
-        user = User(
-            username = username,
-            email = email,
-            password = password
-        )
-
-        user.save()
-
-        data = {
-            'id': user.id,
-            'username': user.username,
-            'email': user.email
-        }
-        
-        return data, HTTPStatus.CREATED
+## Get current user -> GET /api/v1/user
+## Update user -> PUT /api/v1/user
+## Get profile -> GET /api/v1/profiles/:username
 
 class UserResource(Resource):
+    ## FETCHING user data
     @jwt_required(optional=True)
     def get(self, username):
         user = User.get_by_username(username = username)
@@ -68,7 +38,8 @@ class UserResource(Resource):
         return data, HTTPStatus.OK
 
 class MeResource(Resource):
-    @jwt_required(optional=False)
+    ## FETCHING self profile data
+    @jwt_required
     def get(self):
         user = User.get_by_id(id = get_jwt_identity())
         data = {
@@ -76,9 +47,9 @@ class MeResource(Resource):
             'username': user.username,
             'email': user.email
         }
+        
         return data, HTTPStatus.OK
 
-api.add_resource(UserListResource, '/users')
 api.add_resource(UserResource, '/users/<string:username>')
-api.add_resource(TokenResource, '/token')
+#api.add_resource(TokenResource, '/token')
 api.add_resource(MeResource, '/me')
