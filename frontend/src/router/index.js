@@ -1,21 +1,37 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-//import SingleRecipe from "../components/SingleRecipe";
-import RecipeList from "../components/RecipeList";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/recipes",
-    name: "RecipeList",
-    component: RecipeList,
+    name: "home",
+    path: "/",
+    component: () => import("@/views/HomePage"),
+  },
+  {
+    name: "login",
+    path: "/login",
+    component: () => import("@/views/LoginPage"),
+  },
+  {
+    name: "register",
+    path: "/register",
+    component: () => import("@/views/RegisterPage"),
+  },
+  {
+    name: "profile",
+    path: "/@:username",
+    component: () => import("@/views/ProfilePage"),
+  },
+  {
+    name: "settings",
+    path: "/settings",
+    component: () => import("@/views/SettingsPage"),
   },
 ];
 
 const router = new VueRouter({
-  mode: "history",
-  base: process.env.BASE_URL,
   routes,
 });
 

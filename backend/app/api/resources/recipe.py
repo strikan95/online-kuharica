@@ -2,8 +2,8 @@ from flask import request
 from flask_restful import Resource
 from http import HTTPStatus
 
-from . import api
-from ..models.recipes import Recipe, recipe_list
+from .. import api
+from app.models.recipes import Recipe, recipe_list
 
 class RecipeListResource(Resource):
     def get(self):

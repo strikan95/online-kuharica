@@ -10,8 +10,13 @@ from app import create_app, db
 
 app = create_app(os.getenv('FLASK_CONFIG') or 'default')
 
-CORS(app, resources={r'/*':{'origins':'http://localhost:8080',
-        'allow_headers':'Access-Control-Allow-Origin'}})
+# CORS(app, resources={r'/*':{
+#         "Access-Control-Allow-Origin": "http://localhost:8080/",
+#         "Access-Control-Allow-Credentials": "true",
+#         "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT",
+#         "Access-Control-Allow-Headers": "Access-Control-Allow-Headers,Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"}})
+
+CORS(app, supports_credentials=True)
 
 migrade = Migrate(app, db)
 

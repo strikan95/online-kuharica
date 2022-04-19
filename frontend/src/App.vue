@@ -1,12 +1,20 @@
 <template>
   <div id="app">
-    <router-view />
+    <div class="container">
+      <NavBar></NavBar>
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
-<style>
-#app {
-  margin-top: 60px;
-  margin-left: 60px;
-}
-</style>
+<script>
+import NavBar from "@/components/NavigationBar.vue";
+export default {
+  name: "app",
+  components: {
+    NavBar,
+  },
+};
+</script>
+
+<style></style>
