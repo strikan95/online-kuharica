@@ -1,6 +1,6 @@
 import ApiService from "@/common/services/api";
 
-import { LOGIN, LOGOUT, CHECK_AUTH } from "@/common/types/actions";
+import { LOGIN, LOGOUT, CHECK_AUTH, REGISTER } from "@/common/types/actions";
 
 import { SET_AUTH, PURGE_AUTH, SET_ERROR } from "@/common/types/mutations";
 
@@ -20,9 +20,22 @@ const getters = {
 };
 
 const actions = {
+  [REGISTER]({ commit }, credentials) {
+    return new Promise((resolve, reject) => {
+      ApiService.post("register", { credentials })
+        .then(({ data }) => {
+          //commit(SET_AUTH, data.user);
+          resolve(data);
+        })
+        .catch(({ response }) => {
+          commit(SET_ERROR, response.data.errors);
+          reject(response);
+        });
+    });
+  },
   [LOGIN]({ commit }, credentials) {
     return new Promise((resolve) => {
-      ApiService.post("user/login", { user: credentials })
+      ApiService.post("login", { user: credentials })
         .then(({ data }) => {
           commit(SET_AUTH, data.user);
           resolve(data);
@@ -34,25 +47,34 @@ const actions = {
   },
   [LOGOUT]({ commit }) {
     return new Promise((resolve) => {
-      ApiService.post("user/logout").then(() => {
+      ApiService.post("logout").then(() => {
         commit(PURGE_AUTH);
       });
     });
   },
   [CHECK_AUTH]({ commit }) {
-    commit(PURGE_AUTH);
-    // if (state.isAuthenticated) {
-    //   ApiService.get("user")
-    //     .then(({ data }) => {
-    //       commit("setAuth", data.user);
-    //     })
-    //     .catch(({ response }) => {
-    //       commit("setError", response.data.errors);
-    //     });
-    // } else {
-    //   commit("purgeAuth");
-    // }
+    ApiService.get("me")
+      .then((response) => {
+        commit("setAuth", response.data);
+      })
+      .catch((error) => {
+        commit("purgeAuth");
+      });
   },
+  // [CHECK_AUTH]({ commit }) {
+  //   commit(PURGE_AUTH);
+  //   if (state.isAuthenticated) {
+  //     ApiService.get("user")
+  //       .then(({ data }) => {
+  //         commit("setAuth", data.user);
+  //       })
+  //       .catch(({ response }) => {
+  //         commit("setError", response.data.errors);
+  //       });
+  //   } else {
+  //     commit("purgeAuth");
+  //   }
+  //},
 };
 
 const mutations = {

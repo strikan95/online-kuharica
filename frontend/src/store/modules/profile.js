@@ -18,7 +18,7 @@ const getters = {
 const actions = {
   async [FETCH_PROFILE]({ commit }, payload) {
     const username = payload;
-    const response = await ApiService.get("users", username)
+    const response = await ApiService.get("user", username)
       .then(({ data }) => {
         commit(SET_PROFILE, data);
         return data;
