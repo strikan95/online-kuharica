@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 import { LOGIN } from "@/common/types/actions";
 
 export default {

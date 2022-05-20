@@ -7,7 +7,6 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
 import { FETCH_PROFILE } from "@/common/types/actions";
 
 export default {

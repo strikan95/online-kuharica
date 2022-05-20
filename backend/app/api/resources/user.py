@@ -39,17 +39,25 @@ class UserResource(Resource):
 
 class MeResource(Resource):
     ## FETCHING self profile data
-    @jwt_required
+    @jwt_required()
     def get(self):
-        user = User.get_by_id(id = get_jwt_identity())
+        user_id = get_jwt_identity()
+        user = User.get_by_id(id=user_id)
         data = {
             'id': user.id,
             'username': user.username,
             'email': user.email
         }
-        
-        return data, HTTPStatus.OK
 
-api.add_resource(UserResource, '/users/<string:username>')
-#api.add_resource(TokenResource, '/token')
-api.add_resource(MeResource, '/me')
+        return data, HTTPStatus.OK
+        # user = User.get_by_id(id = get_jwt_identity())
+        # data = {
+        #     'id': user.id,
+        #     'username': user.username,
+        #     'email': user.email
+        # }
+        
+        #return data, HTTPStatus.OK
+
+api.add_resource(UserResource, '/user/<string:username>')
+api.add_resource(MeResource, '/me/')

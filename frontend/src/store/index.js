@@ -6,20 +6,14 @@ import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex);
 
-// store = Vuex.Store({
-//   modules: {
-//     Auth,
-//     Profile,
-//   },
-//   plugins: [createPersistedState()],
-// });
-
 export default new Vuex.Store({
   modules: {
     Auth,
     Profile,
   },
-  plugins: [createPersistedState()],
+  // plugins: [
+  //   // createPersistedState({
+  //   //   paths: ["auth"],
+  //   // }),
+  // ],
 });
-
-// export default store;

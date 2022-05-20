@@ -30,17 +30,21 @@ instance.interceptors.response.use(
       return Promise.reject(error);
     }
 
+    if (error.response.data.message === "email or password is incorrect") {
+      return Promise.reject(error);
+    }
+
     const originalRequest = error.config;
     console.debug("Server responded 401 when accessing: ", originalRequest.url);
 
-    if (originalRequest.url.includes("/user/refresh")) {
+    if (originalRequest.url.includes("/refresh")) {
       console.log("Failed to refresh token");
       router.push("/login");
       return Promise.reject(error);
     }
 
     console.log("Trying to refresh tokens");
-    await instance.post("/user/refresh").catch((error) => {
+    await instance.post("/refresh").catch((error) => {
       console.log("Need to authenticated");
       store.commit(PURGE_AUTH);
       return Promise.reject(error);
