@@ -33,3 +33,22 @@ const ApiService = {
 };
 
 export default ApiService;
+
+export const RecipesService = {
+  query() {
+    console.log("Fetching all articles");
+    return ApiService.get("recipes");
+  },
+  get(slug) {
+    return ApiService.get("recipes", slug);
+  },
+  create(params) {
+    return ApiService.post("recipes", { recipes: params });
+  },
+  update(slug, params) {
+    return ApiService.update("recipes", slug, { recipes: params });
+  },
+  destroy(slug) {
+    return ApiService.delete(`recipes/${slug}`);
+  },
+};

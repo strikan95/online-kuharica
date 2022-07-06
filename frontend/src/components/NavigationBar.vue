@@ -9,7 +9,7 @@
             class="nav-link"
             active-class="active"
           >
-            Vue-Auth
+            Kuharica
           </router-link>
         </li>
       </ul>
@@ -37,6 +37,16 @@
       </ul>
 
       <ul v-else class="nav">
+        <li class="nav-item">
+          <router-link
+            :to="{ name: 'newRecipe' }"
+            exact
+            class="nav-link"
+            active-class="active"
+          >
+            + Add New Recipe
+          </router-link>
+        </li>
         <li class="nav-item">
           <router-link
             :to="{ name: 'settings' }"

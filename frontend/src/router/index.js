@@ -29,6 +29,17 @@ const routes = [
     path: "/settings",
     component: () => import("@/views/SettingsPage"),
   },
+  {
+    name: "newRecipe",
+    path: "/new-recipe",
+    component: () => import("@/views/NewRecipePage"),
+  },
+  {
+    name: "recipe",
+    path: "/recipes/:slug",
+    component: () => import("@/views/RecipePage"),
+    props: true,
+  },
 ];
 
 const router = new VueRouter({
